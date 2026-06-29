@@ -2,7 +2,7 @@ name: Automatically Build and Deploy Game
 
 on:
   push:
-    branches: ["main"] # 当 main 分支有代码更新时触发
+    branches: ["main"]
 
 permissions:
   contents: read
@@ -17,7 +17,7 @@ jobs:
   build-and-deploy:
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }} # ✨ 已经修正了这里的语法错误
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -26,8 +26,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: 'npm'
+          node-version: 22 # 升级到 Node 22，彻底解决黄色的过时警告
 
       - name: Install Dependencies
         run: npm install
