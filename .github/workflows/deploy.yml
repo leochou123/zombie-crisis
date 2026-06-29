@@ -4,7 +4,6 @@ on:
   push:
     branches: ["main"] # 当 main 分支有代码更新时触发
 
-# 给这个脚本赋予发布网页的权限
 permissions:
   contents: read
   pages: write
@@ -18,7 +17,7 @@ jobs:
   build-and-deploy:
     environment:
       name: github-pages
-      url: ${{ steps: deployment.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url }} # ✨ 已经修正了这里的语法错误
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -39,27 +38,8 @@ jobs:
       - name: Upload Build Artifacts
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist # Vite 编译后生成的文件夹通常是 dist
+          path: ./dist 
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-点击右上角绿色的 Commit changes...，再点击 Commit changes 保存文件。
-
-⚠️ 第三步：修复 Vite 的路径小坑（不改画面可能会黑屏）
-React/Vite 项目在发布到 GitHub Pages 子目录下时，需要指定基础路径，否则网页会找不到编译后的文件。
-
-回到仓库根目录，看看有没有一个叫 vite.config.ts 或 vite.config.js 的文件。
-
-点击它，然后点击“小铅笔”图标进行编辑。
-
-确保里面加上了 base: '/zombie-crisis/'。它看起来应该类似这样：
-
-TypeScript
-import { defineConfig } from 'vite'
-import react from '@vitejs/react-swc' // 或者 @vitejs/plugin-react
-
-export default defineConfig({
-  plugins: [react()],
-  base: '/zombie-crisis/', // ✨ 必须加上这一行，名字要和你的仓库名完全一致
-})
