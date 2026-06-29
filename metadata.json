@@ -1,0 +1,6 @@
+{
+  "name": "Zombie Crisis",
+  "description": "A tribute to the classic Flash game Boxhead: 2Play Rooms. A 2D top-down zombie survival shooter supporting 1 or 2 players co-op, with multiple weapons, enemy waves, devil bosses, and custom blood splatters.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
